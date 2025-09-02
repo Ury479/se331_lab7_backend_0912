@@ -1,23 +1,22 @@
-package rest.controller;
-
-import entity.Event;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.http.ResponseEntity;
+package entity;
 
 import jakarta.annotation.PostConstruct;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController // Return JSON directly (no view resolution)
 public class EventController {
 
-    // In-memory event store used for demo/lab
-    List<Event> eventList;
+    // In-memory store for lab/demo purpose
+    private List<Event> eventList;
 
     @PostConstruct
     public void init() {
-        // Initialize list and seed demo data (same as db.json in previous lab)
         eventList = new ArrayList<>();
 
         eventList.add(Event.builder()
@@ -28,7 +27,7 @@ public class EventController {
                 .location("Meow Town")
                 .date("January 28, 2022")
                 .time("12:00")
-                .petAllowed(true)          // NOTE: match your Event field name
+                .petAllowed(true) // NOTE: use your entity's field name
                 .organizer("Kat Laydee")
                 .build());
 
@@ -94,8 +93,19 @@ public class EventController {
     }
 
     @GetMapping("/events")
-    public ResponseEntity<List<Event>> getEventLists() {
-        // Return all events as JSON with HTTP 200
-        return ResponseEntity.ok(eventList);
+    public ResponseEntity<?> getEventLists(
+            @RequestParam(value = "_limit", required = false) Integer perPage,
+            @RequestParam(value = "_page", required = false) Integer page) {
+
+        perPage = perPage == null ? eventList.size() : perPage;
+        page = page == null ? 1 : page;
+
+        Integer firstIndex = (page - 1) * perPage;
+        List<Event> output = new ArrayList<>();
+
+        for (int i = firstIndex; i < firstIndex + perPage; i++) {
+            output.add(eventList.get(i));
+        }
+        return ResponseEntity.ok(output);
     }
 }

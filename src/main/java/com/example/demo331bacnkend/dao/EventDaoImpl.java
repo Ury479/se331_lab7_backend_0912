@@ -1,22 +1,20 @@
-package entity;
+package com.example.demo331bacnkend.dao;
 
+import com.example.demo331bacnkend.entity.Event;
 import jakarta.annotation.PostConstruct;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController // Return JSON directly (no view resolution)
-public class EventController {
+@Repository
+public class EventDaoImpl implements EventDao {
 
-    // In-memory store for lab/demo purpose
     private List<Event> eventList;
 
     @PostConstruct
     public void init() {
+        // Seed 6 demo events (same as previous db.json)
         eventList = new ArrayList<>();
 
         eventList.add(Event.builder()
@@ -27,7 +25,7 @@ public class EventController {
                 .location("Meow Town")
                 .date("January 28, 2022")
                 .time("12:00")
-                .petAllowed(true) // NOTE: use your entity's field name
+                .petAllowed(true)
                 .organizer("Kat Laydee")
                 .build());
 
@@ -92,20 +90,29 @@ public class EventController {
                 .build());
     }
 
-    @GetMapping("/events")
-    public ResponseEntity<?> getEventLists(
-            @RequestParam(value = "_limit", required = false) Integer perPage,
-            @RequestParam(value = "_page", required = false) Integer page) {
+    @Override
+    public Integer getEventSize() {
+        return eventList.size();
+    }
 
-        perPage = perPage == null ? eventList.size() : perPage;
+    @Override
+    public List<Event> getEvents(Integer pageSize, Integer page) {
+        // High-level, cleaner pagination per the handout
+        pageSize = pageSize == null ? eventList.size() : pageSize;
         page = page == null ? 1 : page;
+        int firstIndex = (page - 1) * pageSize;
 
-        Integer firstIndex = (page - 1) * perPage;
-        List<Event> output = new ArrayList<>();
+        // NOTE: this subList may throw IndexOutOfBounds when out of range;
+        // the controller already try/catches as required by the lab handout.
+        return eventList.subList(firstIndex, firstIndex + pageSize);
+    }
 
-        for (int i = firstIndex; i < firstIndex + perPage; i++) {
-            output.add(eventList.get(i));
-        }
-        return ResponseEntity.ok(output);
+    @Override
+    public Event getEvent(Long id) {
+        // Cleaner with streams, per the handout
+        return eventList.stream()
+                .filter(e -> e.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 }

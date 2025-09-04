@@ -59,8 +59,24 @@ public class EventController {
     @PostMapping("/events")
     public ResponseEntity<Event> createEvent(@RequestBody Event event) {
         try {
+            // Basic validation
+            if (event.getTitle() == null || event.getTitle().trim().isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Event title is required");
+            }
+            if (event.getDescription() == null || event.getDescription().trim().isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Event description is required");
+            }
+            if (event.getLocation() == null || event.getLocation().trim().isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Event location is required");
+            }
+            if (event.getDate() == null || event.getDate().trim().isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Event date is required");
+            }
+            
             Event createdEvent = eventService.createEvent(event);
             return new ResponseEntity<>(createdEvent, HttpStatus.CREATED);
+        } catch (ResponseStatusException rse) {
+            throw rse; // Re-throw validation errors
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to create event: " + ex.getMessage());
         }

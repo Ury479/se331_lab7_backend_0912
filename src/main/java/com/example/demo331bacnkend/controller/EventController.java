@@ -54,4 +54,15 @@ public class EventController {
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given id is not found");
     }
+
+    /** POST /events - create new event */
+    @PostMapping("/events")
+    public ResponseEntity<Event> createEvent(@RequestBody Event event) {
+        try {
+            Event createdEvent = eventService.createEvent(event);
+            return new ResponseEntity<>(createdEvent, HttpStatus.CREATED);
+        } catch (Exception ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to create event: " + ex.getMessage());
+        }
+    }
 }

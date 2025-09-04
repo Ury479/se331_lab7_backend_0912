@@ -115,4 +115,28 @@ public class EventDaoImpl implements EventDao {
                 .findFirst()
                 .orElse(null);
     }
+
+    @Override
+    public Event createEvent(Event event) {
+        // Generate new ID if not provided
+        if (event.getId() == null) {
+            Long maxId = eventList.stream()
+                    .mapToLong(Event::getId)
+                    .max()
+                    .orElse(0L);
+            event = Event.builder()
+                    .id(maxId + 1)
+                    .category(event.getCategory())
+                    .title(event.getTitle())
+                    .description(event.getDescription())
+                    .location(event.getLocation())
+                    .date(event.getDate())
+                    .time(event.getTime())
+                    .petAllowed(event.getPetAllowed())
+                    .organizer(event.getOrganizer())
+                    .build();
+        }
+        eventList.add(event);
+        return event;
+    }
 }

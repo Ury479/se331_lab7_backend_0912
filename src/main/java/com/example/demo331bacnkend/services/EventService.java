@@ -8,4 +8,5 @@ public interface EventService {
     Integer getEventSize();
     List<Event> getEvents(Integer pageSize, Integer page);
     Event getEvent(Long id);
+    Event createEvent(Event event);
 }

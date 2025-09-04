@@ -49,6 +49,7 @@ public class EventController {
     @GetMapping("/events/{id}") // 若你作业要求是 /event/{id}，同步改这里
     public ResponseEntity<Event> getEvent(@PathVariable("id") Long id) {
         Event output = eventService.getEvent(id);
+        // lab7 中的要求
         if (output != null) {
             return ResponseEntity.ok(output);
         }

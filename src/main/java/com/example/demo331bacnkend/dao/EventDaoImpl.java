@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class EventDaoImpl implements EventDao {
@@ -109,11 +110,15 @@ public class EventDaoImpl implements EventDao {
 
     @Override
     public Event getEvent(Long id) {
-        // Cleaner with streams, per the handout
-        return eventList.stream()
-                .filter(e -> e.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+        // 使用传统 for-each 循环，用 Objects.equals 防 NPE
+        Event output = null;
+        for (Event event : eventList) {
+            if (Objects.equals(event.getId(), id)) {
+                output = event;
+                break; // 找到后立即跳出循环
+            }
+        }
+        return output;
     }
 
     @Override

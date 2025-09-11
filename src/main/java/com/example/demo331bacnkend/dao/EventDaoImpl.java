@@ -2,6 +2,7 @@ package com.example.demo331bacnkend.dao;
 
 import com.example.demo331bacnkend.entity.Event;
 import jakarta.annotation.PostConstruct;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Repository
+@Profile("manual")
 public class EventDaoImpl implements EventDao {
 
     private List<Event> eventList;

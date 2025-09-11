@@ -1,14 +1,15 @@
 package com.example.demo331bacnkend.config;
 
-import com.example.demo331bacnkend.entity.Event;
-import com.example.demo331bacnkend.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
+import com.example.demo331bacnkend.repository.EventRepository;
+import com.example.demo331bacnkend.entity.Event;
 
-
-/** Seed initial Event rows when the app is ready */
+/**
+ * Seed initial rows after application starts.
+ */
 @Component
 @RequiredArgsConstructor
 public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
@@ -17,7 +18,6 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        // Academic: Midterm Exam
         eventRepository.save(Event.builder()
                 .category("Academic")
                 .title("Midterm Exam")
@@ -29,7 +29,6 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .organizer("CAMT")
                 .build());
 
-        // Academic: Commencement Day
         eventRepository.save(Event.builder()
                 .category("Academic")
                 .title("Commencement Day")
@@ -41,7 +40,6 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .organizer("CMU")
                 .build());
 
-        // Cultural: Loy Krathong
         eventRepository.save(Event.builder()
                 .category("Cultural")
                 .title("Loy Krathong")
@@ -53,7 +51,6 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .organizer("Chiang Mai")
                 .build());
 
-        // Cultural: Songkran
         eventRepository.save(Event.builder()
                 .category("Cultural")
                 .title("Songkran")

@@ -2,6 +2,7 @@ package com.example.demo331bacnkend.controller;
 
 import com.example.demo331bacnkend.entity.Organizer;
 import com.example.demo331bacnkend.services.OrganizerService;
+import org.springframework.http.MediaType;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import java.util.List;
 
 /** REST endpoints for organizers: pagination and get-by-id. */
 @RestController
+@RequestMapping("/organizers")
 public class OrganizerController {
 
     private final OrganizerService organizerService;
@@ -21,7 +23,7 @@ public class OrganizerController {
     }
 
     // GET /organizers?_limit=...&_page=...
-    @GetMapping("/organizers")
+    @GetMapping
     public ResponseEntity<List<Organizer>> list(
             @RequestParam(value = "_limit", required = false) Integer perPage,
             @RequestParam(value = "_page",  required = false) Integer page) {
@@ -40,10 +42,19 @@ public class OrganizerController {
     }
 
     // GET /organizers/{id}
-    @GetMapping("/organizers/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Organizer> getOne(@PathVariable Long id) {
         Organizer o = organizerService.getOrganizer(id);
         if (o != null) return ResponseEntity.ok(o);
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given id is not found");
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Organizer> create(@RequestBody Organizer org) {
+        if (org.getOrganizationName() == null || org.getOrganizationName().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Organizer name is required");
+        }
+        Organizer saved = organizerService.save(org);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 }

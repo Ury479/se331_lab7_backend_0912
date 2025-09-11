@@ -2,12 +2,14 @@ package com.example.demo331bacnkend.dao;
 
 import com.example.demo331bacnkend.entity.Organizer;
 import jakarta.annotation.PostConstruct;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@Profile("manual")
 public class OrganizerDaoImpl implements OrganizerDao {
 
     private List<Organizer> organizerList;
@@ -42,5 +44,26 @@ public class OrganizerDaoImpl implements OrganizerDao {
                 .filter(o -> o.getId().equals(id))
                 .findFirst()
                 .orElse(null);
+    }
+
+    @Override
+    public Organizer save(Organizer organizer) {
+        if (organizer.getId() == null) {
+            long nextId = organizerList.stream()
+                    .map(Organizer::getId)
+                    .mapToLong(Long::longValue)
+                    .max()
+                    .orElse(0L) + 1;
+            organizer.setId(nextId);
+        } else {
+            for (int i = 0; i < organizerList.size(); i++) {
+                if (organizerList.get(i).getId().equals(organizer.getId())) {
+                    organizerList.set(i, organizer);
+                    return organizer;
+                }
+            }
+        }
+        organizerList.add(organizer);
+        return organizer;
     }
 }

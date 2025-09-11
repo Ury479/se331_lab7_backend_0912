@@ -2,6 +2,7 @@ package com.example.demo331bacnkend.controller;
 
 import com.example.demo331bacnkend.entity.Event;
 import com.example.demo331bacnkend.services.EventService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,24 +26,11 @@ public class EventController {
     public ResponseEntity<List<Event>> getEventLists(
             @RequestParam(value = "_limit", required = false) Integer perPage,
             @RequestParam(value = "_page",  required = false) Integer page) {
-
-        // Normalize parameters
-        int total = eventService.getEventSize();
-        int size  = (perPage == null || perPage < 1) ? total : perPage;
-        int p     = (page == null || page < 1) ? 1 : page;
-
-        HttpHeaders headers = new HttpHeaders();
+        Page<Event> pageOutput = eventService.getEvents(perPage, page);
+        HttpHeaders responseHeader = new HttpHeaders();
         // Expose total count to frontend for pagination
-        headers.set("x-total-count", String.valueOf(total));
-
-        try {
-            // Delegate to service (DAO handles slicing)
-            List<Event> output = eventService.getEvents(size, p);
-            return new ResponseEntity<>(output, headers, HttpStatus.OK);
-        } catch (IndexOutOfBoundsException ex) {
-            // If page goes out of range, return empty list with 200
-            return new ResponseEntity<>(List.of(), headers, HttpStatus.OK);
-        }
+        responseHeader.set("x-total-count",String.valueOf(pageOutput.getTotalElements()));
+        return  new ResponseEntity<>(pageOutput.getContent(), responseHeader, HttpStatus.OK);
     }
 
     /** GET /events/{id} - fetch single event by id */
@@ -81,5 +69,11 @@ public class EventController {
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to create event: " + ex.getMessage());
         }
+    }
+
+    @PostMapping
+    public ResponseEntity<?> updateEvent(@RequestBody Event event) {
+        Event output = eventService.save(event);
+        return ResponseEntity.ok(output);
     }
 }

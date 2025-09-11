@@ -1,8 +1,11 @@
 package com.example.demo331bacnkend.dao;
 
+import com.example.demo331bacnkend.entity.Event;
 import com.example.demo331bacnkend.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -17,20 +20,23 @@ public class EventDaoDbImpl implements EventDao {
     }
 
     @Override
-    public List<Event> getEvents(Integer pageSize, Integer page) {
-        List<Event> events = eventRepository.findAll();
-
-        pageSize = pageSize == null ? events.size() : pageSize;
-        page = page == null ? 1 : page;
-        int firstIndex = (page - 1) * pageSize;
-
-        List<Event> output = events.subList(firstIndex, firstIndex + pageSize);
-        return output;
+    public Page<Event> getEvents(Integer pageSize, Integer page) {
+        return eventRepository.findAll(PageRequest.of(page, pageSize));
     }
 
     @Override
     public Event getEvent(Long id) {
         return eventRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Event createEvent(Event event) {
+        return eventRepository.save(event);
+    }
+
+    @Override
+    public Event save(Event event) {
+        return eventRepository.save(event);
     }
 }
 

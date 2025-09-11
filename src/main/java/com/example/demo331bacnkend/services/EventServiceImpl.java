@@ -3,6 +3,7 @@ package com.example.demo331bacnkend.services;
 import com.example.demo331bacnkend.dao.EventDao;
 import com.example.demo331bacnkend.entity.Event;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<Event> getEvents(Integer pageSize, Integer page) {
+    public Page<Event> getEvents(Integer pageSize, Integer page) {
         return eventDao.getEvents(pageSize, page);
     }
 
@@ -31,5 +32,10 @@ public class EventServiceImpl implements EventService {
     @Override
     public Event createEvent(Event event) {
         return eventDao.createEvent(event);
+    }
+
+    @Override
+    public Event save(Event event) {
+        return eventDao.save(event);
     }
 }

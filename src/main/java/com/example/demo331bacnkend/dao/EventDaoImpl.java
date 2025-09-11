@@ -2,146 +2,143 @@ package com.example.demo331bacnkend.dao;
 
 import com.example.demo331bacnkend.entity.Event;
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Manual in-memory DAO implementation.
+ * This bean is active only when profile "manual" is enabled.
+ */
 @Repository
 @Profile("manual")
+@RequiredArgsConstructor
 public class EventDaoImpl implements EventDao {
 
-    private List<Event> eventList;
+    /** In-memory store for events */
+    private final List<Event> eventList = new ArrayList<>();
 
+    /** Seed initial data after bean construction */
     @PostConstruct
     public void init() {
-        // Seed 6 demo events (same as previous db.json)
-        eventList = new ArrayList<>();
-
+        // Academic: Midterm Exam
         eventList.add(Event.builder()
-                .id(123L)
-                .category("animal welfare")
-                .title("Cat Adoption Day")
-                .description("Find your new feline friend at this event.")
-                .location("Meow Town")
-                .date("January 28, 2022")
-                .time("12:00")
-                .petAllowed(true)
-                .organizer("Kat Laydee")
-                .build());
-
-        eventList.add(Event.builder()
-                .id(456L)
-                .category("food")
-                .title("Community Gardening")
-                .description("Join us as we tend to the community edible plants.")
-                .location("Flora City")
-                .date("March 14, 2022")
-                .time("10:00")
-                .petAllowed(true)
-                .organizer("Fern Pollin")
-                .build());
-
-        eventList.add(Event.builder()
-                .id(789L)
-                .category("sustainability")
-                .title("Beach Cleanup")
-                .description("Help pick up trash along the shore.")
-                .location("Playa Del Carmen")
-                .date("July 22, 2022")
-                .time("11:00")
+                .id(1L)
+                .category("Academic")
+                .title("Midterm Exam")
+                .description("A time for taking the exam")
+                .location("CAMT Building")
+                .date("3rd Sept")
+                .time("3.00-4.00 pm.")
                 .petAllowed(false)
-                .organizer("Carey Wales")
+                .organizer("CAMT")
                 .build());
 
+        // Academic: Commencement Day
         eventList.add(Event.builder()
-                .id(1001L)
-                .category("animal welfare")
-                .title("Dog Adoption Day")
-                .description("Find your new canine friend at this event.")
-                .location("Woof Town")
-                .date("August 28, 2022")
-                .time("12:00")
-                .petAllowed(true)
-                .organizer("Dawg Dahd")
-                .build());
-
-        eventList.add(Event.builder()
-                .id(1002L)
-                .category("food")
-                .title("Canned Food Drive")
-                .description("Bring your canned food to donate to those in need.")
-                .location("Tin City")
-                .date("September 14, 2022")
-                .time("3:00")
-                .petAllowed(true)
-                .organizer("Kahn Opiner")
-                .build());
-
-        eventList.add(Event.builder()
-                .id(1003L)
-                .category("sustainability")
-                .title("Highway Cleanup")
-                .description("Help pick up trash along the highway.")
-                .location("Highway 50")
-                .date("July 22, 2022")
-                .time("11:00")
+                .id(2L)
+                .category("Academic")
+                .title("Commencement Day")
+                .description("A time for celebration")
+                .location("CMU Convention hall")
+                .date("21th Jan")
+                .time("8.00am-4.00 pm.")
                 .petAllowed(false)
-                .organizer("Brody Kill")
+                .organizer("CMU")
+                .build());
+
+        // Cultural: Loy Krathong
+        eventList.add(Event.builder()
+                .id(3L)
+                .category("Cultural")
+                .title("Loy Krathong")
+                .description("A time for Krathong")
+                .location("Ping River")
+                .date("21th Nov")
+                .time("8.00-10.00 pm.")
+                .petAllowed(false)
+                .organizer("Chiang Mai")
+                .build());
+
+        // Cultural: Songkran
+        eventList.add(Event.builder()
+                .id(4L)
+                .category("Cultural")
+                .title("Songkran")
+                .description("Let's Play Water")
+                .location("Chiang Mai Moat")
+                .date("13th April")
+                .time("10.00am - 6.00 pm.")
+                .petAllowed(true)
+                .organizer("Chiang Mai Municipality")
                 .build());
     }
 
+    /** Return total size of events */
     @Override
     public Integer getEventSize() {
         return eventList.size();
     }
 
+    /**
+     * Return paginated events.
+     * If pageSize is null -> return all.
+     * If page is null -> treat as page 1.
+     */
     @Override
-    public List<Event> getEvents(Integer pageSize, Integer page) {
-        // High-level, cleaner pagination per the handout
-        pageSize = pageSize == null ? eventList.size() : pageSize;
-        page = page == null ? 1 : page;
-        int firstIndex = (page - 1) * pageSize;
+    public Page<Event> getEvents(Integer pageSize, Integer page) {
+        int size = (pageSize == null || pageSize <= 0) ? eventList.size() : pageSize;
+        int p = (page == null || page <= 0) ? 0 : (page - 1); // PageRequest uses 0-based index
 
-        // NOTE: this subList may throw IndexOutOfBounds when out of range;
-        // the controller already try/catches as required by the lab handout.
-        return eventList.subList(firstIndex, firstIndex + pageSize);
+        int from = p * size;
+        int to = Math.min(eventList.size(), from + size);
+        List<Event> content = from >= eventList.size() ? new ArrayList<>() : new ArrayList<>(eventList.subList(from, to));
+        return new PageImpl<>(content, PageRequest.of(p, size), eventList.size());
     }
 
+    /** Find one by id */
     @Override
     public Event getEvent(Long id) {
-        // 使用传统 for-each 循环，用 Objects.equals 防 NPE
-        Event output = null;
-        for (Event event : eventList) {
-            if (Objects.equals(event.getId(), id)) {
-                output = event;
-                break; // 找到后立即跳出循环
-            }
-        }
-        return output;
+        return eventList.stream()
+                .filter(e -> Objects.equals(e.getId(), id))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
     public Event createEvent(Event event) {
-        // Generate new ID if not provided
+        // naive id generation if missing
         if (event.getId() == null) {
-            Long maxId = eventList.stream()
-                    .mapToLong(Event::getId)
+            long nextId = eventList.stream()
+                    .map(Event::getId)
+                    .filter(Objects::nonNull)
+                    .mapToLong(Long::longValue)
                     .max()
-                    .orElse(0L);
-            event = Event.builder()
-                    .id(maxId + 1)
-                    .category(event.getCategory())
-                    .title(event.getTitle())
-                    .description(event.getDescription())
-                    .location(event.getLocation())
-                    .date(event.getDate())
-                    .time(event.getTime())
-                    .petAllowed(event.getPetAllowed())
-                    .organizer(event.getOrganizer())
-                    .build();
+                    .orElse(0L) + 1;
+            event.setId(nextId);
+        }
+        eventList.add(event);
+        return event;
+    }
+
+    @Override
+    public Event save(Event event) {
+        if (event.getId() == null) {
+            return createEvent(event);
+        }
+        // replace existing by id
+        for (int i = 0; i < eventList.size(); i++) {
+            if (Objects.equals(eventList.get(i).getId(), event.getId())) {
+                eventList.set(i, event);
+                return event;
+            }
         }
         eventList.add(event);
         return event;

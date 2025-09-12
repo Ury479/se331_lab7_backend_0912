@@ -7,3 +7,4 @@ public interface OrganizerRepository extends JpaRepository<Organizer, Long> {
 }
 
 
+

@@ -27,8 +27,8 @@ public class EventDaoDbImpl implements EventDao {
 
     @Override
     public Page<Event> getEvents(String title, Pageable page) {
-        // 先实现“标题包含”的模糊查询
-        return eventRepository.findByTitleContaining(title, page);
+        // 根据题意 1.7/1.8/1.9：可切换不同查询。此处选择“标题或描述或组织者 任一包含 + 忽略大小写”
+        return eventRepository.findByTitleIgnoreCaseContainingOrDescriptionIgnoreCaseContainingOrOrganizerIgnoreCaseContaining(title, title, title, page);
     }
 
     @Override

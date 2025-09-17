@@ -70,11 +70,11 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Embedded database for tests -->
+        <!-- Embedded database for manual profile runtime -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>test</scope>
+            <scope>runtime</scope>
         </dependency>
 
     </dependencies>

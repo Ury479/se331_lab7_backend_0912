@@ -1,10 +1,13 @@
 services:
   db:
-    image: mysql
+    image: mysql:8.0.36
     ports:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: cmu123wyh
+      MYSQL_DATABASE: selabdb
+      MYSQL_USER: seuser
+      MYSQL_PASSWORD: "Se331!pass"
 
   phpmyadmin:
     image: phpmyadmin

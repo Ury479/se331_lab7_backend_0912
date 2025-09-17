@@ -27,14 +27,22 @@ public class EventController {
     public ResponseEntity<List<Event>> getEventLists(
             @RequestParam(value = "_limit", required = false) Integer perPage,
             @RequestParam(value = "_page",  required = false) Integer page,
-            @RequestParam(value = "title", required = false) String title) {
+            @RequestParam(value = "title", required = false) String title,
+            @RequestParam(value = "mode",  required = false, defaultValue = "default") String mode) {
         perPage = perPage == null ? 3 : perPage;
         page = page == null ? 1 : page;
         Page<Event> pageOutput;
         if (title == null) {
             pageOutput = eventService.getEvents(perPage, page);
         } else {
-            pageOutput = eventService.getEvents(title, PageRequest.of(page - 1, perPage));
+            String m = mode == null ? "default" : mode.toLowerCase();
+            if ("and".equals(m)) {
+                pageOutput = eventService.getEventsAnd(title, PageRequest.of(page - 1, perPage));
+            } else if ("or".equals(m)) {
+                pageOutput = eventService.getEventsOr(title, PageRequest.of(page - 1, perPage));
+            } else {
+                pageOutput = eventService.getEvents(title, PageRequest.of(page - 1, perPage));
+            }
         }
         HttpHeaders responseHeader = new HttpHeaders();
         // Expose total count to frontend for pagination

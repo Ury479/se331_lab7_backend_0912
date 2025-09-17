@@ -31,6 +31,18 @@ public class EventDaoDbImpl implements EventDao {
         return eventRepository.findByTitleIgnoreCaseContainingOrDescriptionIgnoreCaseContainingOrOrganizerIgnoreCaseContaining(title, title, title, page);
     }
 
+    // 1.7：标题且描述都包含（AND）
+    @Override
+    public Page<Event> getEventsAnd(String title, Pageable page) {
+        return eventRepository.findByTitleContainingAndDescriptionContaining(title, title, page);
+    }
+
+    // 1.8：标题或描述或组织者任一包含（OR）
+    @Override
+    public Page<Event> getEventsOr(String title, Pageable page) {
+        return eventRepository.findByTitleContainingOrDescriptionContainingOrOrganizerContaining(title, title, title, page);
+    }
+
     @Override
     public Event getEvent(Long id) {
         return eventRepository.findById(id).orElse(null);

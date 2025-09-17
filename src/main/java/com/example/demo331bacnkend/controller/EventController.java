@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -25,8 +26,16 @@ public class EventController {
     @GetMapping("/events") // 若你作业要求是 /event，请改为 "/event"
     public ResponseEntity<List<Event>> getEventLists(
             @RequestParam(value = "_limit", required = false) Integer perPage,
-            @RequestParam(value = "_page",  required = false) Integer page) {
-        Page<Event> pageOutput = eventService.getEvents(perPage, page);
+            @RequestParam(value = "_page",  required = false) Integer page,
+            @RequestParam(value = "title", required = false) String title) {
+        perPage = perPage == null ? 3 : perPage;
+        page = page == null ? 1 : page;
+        Page<Event> pageOutput;
+        if (title == null) {
+            pageOutput = eventService.getEvents(perPage, page);
+        } else {
+            pageOutput = eventService.getEvents(title, PageRequest.of(page - 1, perPage));
+        }
         HttpHeaders responseHeader = new HttpHeaders();
         // Expose total count to frontend for pagination
         responseHeader.set("x-total-count",String.valueOf(pageOutput.getTotalElements()));

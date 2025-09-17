@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -22,6 +23,12 @@ public class EventDaoDbImpl implements EventDao {
     @Override
     public Page<Event> getEvents(Integer pageSize, Integer page) {
         return eventRepository.findAll(PageRequest.of(page, pageSize));
+    }
+
+    @Override
+    public Page<Event> getEvents(String title, Pageable page) {
+        // 先实现“标题包含”的模糊查询
+        return eventRepository.findByTitleContaining(title, page);
     }
 
     @Override

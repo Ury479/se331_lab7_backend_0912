@@ -12,17 +12,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * without touching existing working code elsewhere.
  */
 @SpringBootApplication
-@ComponentScan(basePackages = {
-        "com.example.demo331bacnkend", // current package (typo kept)
-        "com.example.demo331backnend"  // other package spelling
-})
+// current package (typo kept)
 @EntityScan(basePackages = {
         "com.example.demo331bacnkend",
-        "com.example.demo331backnend"
 })
 @EnableJpaRepositories(basePackages = {
         "com.example.demo331bacnkend",
-        "com.example.demo331backnend"
 })
 public class Demo331BacnkendApplication {
 

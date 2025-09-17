@@ -4,9 +4,9 @@ import com.example.demo331bacnkend.dao.EventDao;
 import com.example.demo331bacnkend.entity.Event;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +22,11 @@ public class EventServiceImpl implements EventService {
     @Override
     public Page<Event> getEvents(Integer pageSize, Integer page) {
         return eventDao.getEvents(pageSize, page);
+    }
+
+    @Override
+    public Page<Event> getEvents(String title, Pageable pageable) {
+        return eventDao.getEvents(title, pageable);
     }
 
     @Override

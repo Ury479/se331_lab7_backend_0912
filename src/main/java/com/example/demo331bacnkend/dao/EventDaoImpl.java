@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -101,6 +102,22 @@ public class EventDaoImpl implements EventDao {
         int to = Math.min(eventList.size(), from + size);
         List<Event> content = from >= eventList.size() ? new ArrayList<>() : new ArrayList<>(eventList.subList(from, to));
         return new PageImpl<>(content, PageRequest.of(p, size), eventList.size());
+    }
+
+    @Override
+    public Page<Event> getEvents(String title, Pageable page) {
+        List<Event> filtered = new ArrayList<>();
+        for (Event e : eventList) {
+            boolean titleMatch = e.getTitle() != null && e.getTitle().contains(title);
+            boolean descMatch = e.getDescription() != null && e.getDescription().contains(title);
+            if (titleMatch || descMatch) {
+                filtered.add(e);
+            }
+        }
+        int from = (int) page.getOffset();
+        int to = Math.min(filtered.size(), from + page.getPageSize());
+        List<Event> content = from >= filtered.size() ? new ArrayList<>() : new ArrayList<>(filtered.subList(from, to));
+        return new PageImpl<>(content, page, filtered.size());
     }
 
     /** Find one by id */

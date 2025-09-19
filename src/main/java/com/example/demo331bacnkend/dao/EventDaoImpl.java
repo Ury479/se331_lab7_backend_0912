@@ -120,6 +120,28 @@ public class EventDaoImpl implements EventDao {
         return new PageImpl<>(content, page, filtered.size());
     }
 
+    @Override
+    public Page<Event> getEventsAnd(String title, Pageable page) {
+        List<Event> filtered = new ArrayList<>();
+        for (Event e : eventList) {
+            boolean titleMatch = e.getTitle() != null && e.getTitle().contains(title);
+            boolean descMatch = e.getDescription() != null && e.getDescription().contains(title);
+            if (titleMatch && descMatch) {
+                filtered.add(e);
+            }
+        }
+        int from = (int) page.getOffset();
+        int to = Math.min(filtered.size(), from + page.getPageSize());
+        List<Event> content = from >= filtered.size() ? new ArrayList<>() : new ArrayList<>(filtered.subList(from, to));
+        return new PageImpl<>(content, page, filtered.size());
+    }
+
+    @Override
+    public Page<Event> getEventsOr(String title, Pageable page) {
+        // 与 getEvents 的语义一致：标题或描述任一包含
+        return getEvents(title, page);
+    }
+
     /** Find one by id */
     @Override
     public Event getEvent(Long id) {

@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Firebase / GCP credentials
+src/main/resources/*firebase*adminsdk*.json
+src/main/resources/*serviceAccount*.json
+src/main/resources/*.json
+*.p12

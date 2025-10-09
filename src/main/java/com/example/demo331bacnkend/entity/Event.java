@@ -1,10 +1,9 @@
 package com.example.demo331bacnkend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -24,4 +23,6 @@ public class Event {
     String time;
     Boolean petAllowed;
     String organizer;
+    @ElementCollection
+    List<String> images;
 }

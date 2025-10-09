@@ -48,6 +48,9 @@ public class EventController {
     @PostMapping("/events")
     public ResponseEntity<Event> createEvent(@RequestBody Event event) {
         try {
+            // 确保 id 为 null，让数据库自动生成
+            event.setId(null);
+            
             // Basic validation
             if (event.getTitle() == null || event.getTitle().trim().isEmpty()) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Event title is required");

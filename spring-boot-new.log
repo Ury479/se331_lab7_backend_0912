@@ -1,0 +1,183 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------------< com.example:demo-331-bacnkend >--------------------
+[INFO] Building demo-331-bacnkend 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.5.5:run (default-cli) > test-compile @ demo-331-bacnkend >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ demo-331-bacnkend ---
+[INFO] Copying 2 resources from src/main/resources to target/classes
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ demo-331-bacnkend ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ demo-331-bacnkend ---
+[INFO] skip non existing resourceDirectory /Users/ury/se331_lab7_backend_0912/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ demo-331-bacnkend ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 1 source file with javac [debug parameters release 17] to target/test-classes
+[INFO] 
+[INFO] <<< spring-boot:3.5.5:run (default-cli) < test-compile @ demo-331-bacnkend <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.5.5:run (default-cli) @ demo-331-bacnkend ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.5)
+
+2025-10-09T20:23:33.451+07:00  INFO 19922 --- [331-backend] [  restartedMain] c.e.d.Demo331BacnkendApplication         : Starting Demo331BacnkendApplication using Java 17.0.15 with PID 19922 (/Users/ury/se331_lab7_backend_0912/target/classes started by ury in /Users/ury/se331_lab7_backend_0912)
+2025-10-09T20:23:33.452+07:00  INFO 19922 --- [331-backend] [  restartedMain] c.e.d.Demo331BacnkendApplication         : The following 1 profile is active: "db"
+2025-10-09T20:23:33.472+07:00  INFO 19922 --- [331-backend] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-10-09T20:23:33.472+07:00  INFO 19922 --- [331-backend] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-10-09T20:23:33.630+07:00  INFO 19922 --- [331-backend] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-09T20:23:33.650+07:00  INFO 19922 --- [331-backend] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 3 JPA repository interfaces.
+2025-10-09T20:23:33.907+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-09T20:23:33.913+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-09T20:23:33.914+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-10-09T20:23:33.928+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-10-09T20:23:33.929+07:00  INFO 19922 --- [331-backend] [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 456 ms
+2025-10-09T20:23:33.991+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-09T20:23:34.010+07:00  INFO 19922 --- [331-backend] [  restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.26.Final
+2025-10-09T20:23:34.025+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-09T20:23:34.118+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-09T20:23:34.134+07:00  INFO 19922 --- [331-backend] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-09T20:23:34.200+07:00  INFO 19922 --- [331-backend] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@73126786
+2025-10-09T20:23:34.200+07:00  INFO 19922 --- [331-backend] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-09T20:23:34.224+07:00  WARN 19922 --- [331-backend] [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-09T20:23:34.231+07:00  INFO 19922 --- [331-backend] [  restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.43
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-09T20:23:34.535+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-09T20:23:34.640+07:00  INFO 19922 --- [331-backend] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+✅ Firebase Storage initialized successfully!
+2025-10-09T20:23:34.798+07:00  WARN 19922 --- [331-backend] [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-09T20:23:34.910+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3307/selabdb?createDatabaseIfNotExist=true&autoReconnect=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true'
+2025-10-09T20:23:34.930+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-10-09T20:23:34.943+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-10-09T20:23:34.947+07:00  INFO 19922 --- [331-backend] [  restartedMain] c.e.d.Demo331BacnkendApplication         : Started Demo331BacnkendApplication in 1.638 seconds (process running for 1.788)
+2025-10-09T20:24:09.846+07:00  INFO 19922 --- [331-backend] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-09T20:24:09.847+07:00  INFO 19922 --- [331-backend] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-10-09T20:24:09.849+07:00  INFO 19922 --- [331-backend] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2025-10-09T20:24:32.821+07:00  INFO 19922 --- [331-backend] [   File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-10-09T20:24:32.825+07:00  INFO 19922 --- [331-backend] [       Thread-5] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-09T20:24:32.831+07:00  INFO 19922 --- [331-backend] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-09T20:24:32.835+07:00  INFO 19922 --- [331-backend] [       Thread-5] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-09T20:24:32.838+07:00  INFO 19922 --- [331-backend] [       Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-10-09T20:24:32.843+07:00  INFO 19922 --- [331-backend] [       Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.5)
+
+2025-10-09T20:24:32.896+07:00  INFO 19922 --- [331-backend] [  restartedMain] c.e.d.Demo331BacnkendApplication         : Starting Demo331BacnkendApplication using Java 17.0.15 with PID 19922 (/Users/ury/se331_lab7_backend_0912/target/classes started by ury in /Users/ury/se331_lab7_backend_0912)
+2025-10-09T20:24:32.896+07:00  INFO 19922 --- [331-backend] [  restartedMain] c.e.d.Demo331BacnkendApplication         : The following 1 profile is active: "db"
+2025-10-09T20:24:32.943+07:00  INFO 19922 --- [331-backend] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-09T20:24:32.947+07:00  INFO 19922 --- [331-backend] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 3 JPA repository interfaces.
+2025-10-09T20:24:32.990+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-09T20:24:32.990+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-09T20:24:32.990+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-10-09T20:24:32.996+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-10-09T20:24:32.996+07:00  INFO 19922 --- [331-backend] [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 99 ms
+2025-10-09T20:24:33.009+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-09T20:24:33.010+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-09T20:24:33.014+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-09T20:24:33.014+07:00  INFO 19922 --- [331-backend] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2025-10-09T20:24:33.024+07:00  INFO 19922 --- [331-backend] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@45803db8
+2025-10-09T20:24:33.024+07:00  INFO 19922 --- [331-backend] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2025-10-09T20:24:33.025+07:00  WARN 19922 --- [331-backend] [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-09T20:24:33.025+07:00  INFO 19922 --- [331-backend] [  restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
+	Database driver: undefined/unknown
+	Database version: 8.0.43
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-09T20:24:33.049+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-09T20:24:33.161+07:00  INFO 19922 --- [331-backend] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+✅ Firebase Storage initialized successfully!
+2025-10-09T20:24:33.200+07:00  WARN 19922 --- [331-backend] [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-09T20:24:33.230+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3307/selabdb?createDatabaseIfNotExist=true&autoReconnect=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true'
+2025-10-09T20:24:33.235+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-10-09T20:24:33.240+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-10-09T20:24:33.242+07:00  INFO 19922 --- [331-backend] [  restartedMain] c.e.d.Demo331BacnkendApplication         : Started Demo331BacnkendApplication in 0.356 seconds (process running for 60.083)
+2025-10-09T20:24:33.255+07:00  INFO 19922 --- [331-backend] [  restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-10-09T20:26:12.365+07:00  INFO 19922 --- [331-backend] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-09T20:26:12.366+07:00  INFO 19922 --- [331-backend] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-10-09T20:26:12.371+07:00  INFO 19922 --- [331-backend] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2025-10-09T20:26:31.643+07:00  WARN 19922 --- [331-backend] [nio-8080-exec-7] .w.s.m.a.ResponseStatusExceptionResolver : Resolved [org.springframework.web.server.ResponseStatusException: 400 BAD_REQUEST "Failed to create event: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect): [com.example.demo331bacnkend.entity.Event#0]"]
+2025-10-09T20:28:02.663+07:00  INFO 19922 --- [331-backend] [   File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-10-09T20:28:02.667+07:00  INFO 19922 --- [331-backend] [       Thread-7] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-09T20:28:02.670+07:00  INFO 19922 --- [331-backend] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-09T20:28:02.672+07:00  INFO 19922 --- [331-backend] [       Thread-7] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-09T20:28:02.673+07:00  INFO 19922 --- [331-backend] [       Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2025-10-09T20:28:02.674+07:00  INFO 19922 --- [331-backend] [       Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.5)
+
+2025-10-09T20:28:02.758+07:00  INFO 19922 --- [331-backend] [  restartedMain] c.e.d.Demo331BacnkendApplication         : Starting Demo331BacnkendApplication using Java 17.0.15 with PID 19922 (/Users/ury/se331_lab7_backend_0912/target/classes started by ury in /Users/ury/se331_lab7_backend_0912)
+2025-10-09T20:28:02.758+07:00  INFO 19922 --- [331-backend] [  restartedMain] c.e.d.Demo331BacnkendApplication         : The following 1 profile is active: "db"
+2025-10-09T20:28:02.803+07:00  INFO 19922 --- [331-backend] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-09T20:28:02.808+07:00  INFO 19922 --- [331-backend] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 3 JPA repository interfaces.
+2025-10-09T20:28:02.859+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-09T20:28:02.859+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-09T20:28:02.860+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-10-09T20:28:02.864+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-10-09T20:28:02.864+07:00  INFO 19922 --- [331-backend] [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 105 ms
+2025-10-09T20:28:02.879+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-09T20:28:02.880+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-09T20:28:02.883+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-09T20:28:02.884+07:00  INFO 19922 --- [331-backend] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2025-10-09T20:28:02.895+07:00  INFO 19922 --- [331-backend] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5c87781
+2025-10-09T20:28:02.895+07:00  INFO 19922 --- [331-backend] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2025-10-09T20:28:02.896+07:00  WARN 19922 --- [331-backend] [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-09T20:28:02.896+07:00  INFO 19922 --- [331-backend] [  restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-3)']
+	Database driver: undefined/unknown
+	Database version: 8.0.43
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-09T20:28:02.918+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-09T20:28:03.050+07:00  INFO 19922 --- [331-backend] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+✅ Firebase Storage initialized successfully!
+2025-10-09T20:28:03.089+07:00  WARN 19922 --- [331-backend] [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-09T20:28:03.122+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3307/selabdb?createDatabaseIfNotExist=true&autoReconnect=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true'
+2025-10-09T20:28:03.128+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-10-09T20:28:03.131+07:00  INFO 19922 --- [331-backend] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-10-09T20:28:03.134+07:00  INFO 19922 --- [331-backend] [  restartedMain] c.e.d.Demo331BacnkendApplication         : Started Demo331BacnkendApplication in 0.387 seconds (process running for 269.974)
+2025-10-09T20:28:03.149+07:00  INFO 19922 --- [331-backend] [  restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-10-09T20:28:07.987+07:00  INFO 19922 --- [331-backend] [ionShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-09T20:28:07.989+07:00  INFO 19922 --- [331-backend] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-09T20:28:07.990+07:00  INFO 19922 --- [331-backend] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-09T20:28:07.990+07:00  INFO 19922 --- [331-backend] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2025-10-09T20:28:07.991+07:00  INFO 19922 --- [331-backend] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.

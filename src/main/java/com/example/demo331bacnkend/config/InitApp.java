@@ -6,6 +6,12 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import com.example.demo331bacnkend.repository.EventRepository;
 import com.example.demo331bacnkend.entity.Event;
+import se331.lab.rest.security.user.Role;
+import se331.lab.rest.security.user.User;
+import se331.lab.rest.security.user.UserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import jakarta.transaction.Transactional;
 
 /**
  * Seed initial rows after application starts.
@@ -15,9 +21,12 @@ import com.example.demo331bacnkend.entity.Event;
 public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
 
     private final EventRepository eventRepository;
+    private final UserRepository userRepository;
 
     @Override
+    @Transactional
     public void onApplicationEvent(ApplicationReadyEvent event) {
+        addUser();
         eventRepository.save(Event.builder()
                 .category("Academic")
                 .title("Midterm Exam")
@@ -61,5 +70,46 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .petAllowed(true)
                 .organizer("Chiang Mai Municipality")
                 .build());
+    }
+
+    private void addUser() {
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        
+        User user1 = User.builder()
+                .username("admin")
+                .password(encoder.encode("admin"))
+                .firstname("admin")
+                .lastname("admin")
+                .email("admin@admin.com")
+                .enabled(true)
+                .build();
+        
+        User user2 = User.builder()
+                .username("user")
+                .password(encoder.encode("user"))
+                .firstname("user")
+                .lastname("user")
+                .email("enabled@user.com")
+                .enabled(true)
+                .build();
+        
+        User user3 = User.builder()
+                .username("disableUser")
+                .password(encoder.encode("disableUser"))
+                .firstname("disableUser")
+                .lastname("disableUser")
+                .email("disableUser@user.com")
+                .enabled(false)
+                .build();
+        
+        user1.getRoles().add(Role.ROLE_USER);
+        user1.getRoles().add(Role.ROLE_ADMIN);
+        
+        user2.getRoles().add(Role.ROLE_USER);
+        user3.getRoles().add(Role.ROLE_USER);
+        
+        userRepository.save(user1);
+        userRepository.save(user2);
+        userRepository.save(user3);
     }
 }

@@ -21,12 +21,16 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    /** GET /events with pagination: _limit & _page */
+    /** GET /events with pagination: _limit & _page 实现分页功能*/
     @GetMapping("/events") // 若你作业要求是 /event，请改为 "/event"
     public ResponseEntity<List<Event>> getEventLists(
             @RequestParam(value = "_limit", required = false) Integer perPage,
             @RequestParam(value = "_page",  required = false) Integer page) {
-        Page<Event> pageOutput = eventService.getEvents(perPage, page);
+        // 设置默认值以避免 NullPointerException
+        Integer pageNumber = (page != null) ? page : 1;
+        Integer pageSize = (perPage != null) ? perPage : 10;
+        
+        Page<Event> pageOutput = eventService.getEvents(pageSize, pageNumber);
         HttpHeaders responseHeader = new HttpHeaders();
         // Expose total count to frontend for pagination
         responseHeader.set("x-total-count",String.valueOf(pageOutput.getTotalElements()));

@@ -66,4 +66,9 @@ public class OrganizerDaoImpl implements OrganizerDao {
         organizerList.add(organizer);
         return organizer;
     }
+
+    @Override
+    public void delete(Long id) {
+        organizerList.removeIf(o -> o.getId().equals(id));
+    }
 }

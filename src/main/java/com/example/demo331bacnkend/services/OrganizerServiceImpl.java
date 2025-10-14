@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+//不直接操作数据库，而是把“增删改查 + 列表分页”等业务调用委托给 OrganizerDao 完成
 @Service
 @RequiredArgsConstructor
 public class OrganizerServiceImpl implements OrganizerService {
@@ -31,5 +32,10 @@ public class OrganizerServiceImpl implements OrganizerService {
     @Override
     public Organizer save(Organizer organizer) {
         return organizerDao.save(organizer);
+    }
+
+    @Override
+    public void delete(Long id) {
+        organizerDao.delete(id);
     }
 }

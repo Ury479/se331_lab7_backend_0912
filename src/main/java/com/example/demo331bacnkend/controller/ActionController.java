@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+//与CSRF，JWT 无关
 @RestController
 @RequestMapping("/actions")
 @CrossOrigin(origins = "*")

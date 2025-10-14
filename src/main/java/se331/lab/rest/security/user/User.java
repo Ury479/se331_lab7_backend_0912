@@ -35,7 +35,8 @@ public class User implements UserDetails {
   private String username;
   private String email;
   private String password;
-  private Boolean enabled;
+  @Builder.Default
+  private Boolean enabled = true;
 
   @Enumerated(EnumType.STRING)
   @ElementCollection

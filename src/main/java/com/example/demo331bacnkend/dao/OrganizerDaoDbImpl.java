@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+//DAO 层代码
 @Repository
 @RequiredArgsConstructor
 @Profile("db")
@@ -34,6 +35,11 @@ public class OrganizerDaoDbImpl implements OrganizerDao {
     @Override
     public Organizer save(Organizer organizer) {
         return organizerRepository.save(organizer);
+    }
+
+    @Override
+    public void delete(Long id) {
+        organizerRepository.deleteById(id);
     }
 }
 

@@ -14,7 +14,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @ComponentScan(basePackages = {
         "com.example.demo331bacnkend", // current package (typo kept)
-        "com.example.demo331backnend",  // other package spelling
         "se331.lab.rest.security"       // security package
 })
 @EntityScan(basePackages = {
@@ -25,7 +24,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 })
 @EnableJpaRepositories(basePackages = {
         "com.example.demo331bacnkend.repository",
-        "com.example.demo331backnend.repository",
         "se331.lab.rest.security.user",
         "se331.lab.rest.security.token"
 })

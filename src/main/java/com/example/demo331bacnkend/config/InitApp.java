@@ -22,11 +22,13 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
 
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
+    private final com.example.demo331bacnkend.repository.OrganizerRepository organizerRepository;
 
     @Override
     @Transactional
     public void onApplicationEvent(ApplicationReadyEvent event) {
         addUser();
+        addOrganizers();
         eventRepository.save(Event.builder()
                 .category("Academic")
                 .title("Midterm Exam")
@@ -75,8 +77,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     private void addUser() {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         
+        // ✅ 确保 username 和 email 一致性
         User user1 = User.builder()
-                .username("admin")
+                .username("admin")  // username = 用户名
                 .password(encoder.encode("admin"))
                 .firstname("admin")
                 .lastname("admin")
@@ -85,7 +88,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .build();
         
         User user2 = User.builder()
-                .username("user")
+                .username("user")  // username = 用户名
                 .password(encoder.encode("user"))
                 .firstname("user")
                 .lastname("user")
@@ -94,7 +97,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .build();
         
         User user3 = User.builder()
-                .username("disableUser")
+                .username("disableUser")  // username = 用户名
                 .password(encoder.encode("disableUser"))
                 .firstname("disableUser")
                 .lastname("disableUser")
@@ -111,5 +114,32 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);
+    }
+
+    private void addOrganizers() {
+        organizerRepository.save(com.example.demo331bacnkend.entity.Organizer.builder()
+                .organizationName("CAMT")
+                .address("239 Huay Kaew Rd, Suthep, Muang, Chiang Mai")
+                .build());
+
+        organizerRepository.save(com.example.demo331bacnkend.entity.Organizer.builder()
+                .organizationName("CMU")
+                .address("Chiang Mai University, 239 Huay Kaew Rd, Chiang Mai")
+                .build());
+
+        organizerRepository.save(com.example.demo331bacnkend.entity.Organizer.builder()
+                .organizationName("Chiang Mai Municipality")
+                .address("Chiang Mai City Hall, Chang Khlan Rd, Chiang Mai")
+                .build());
+
+        organizerRepository.save(com.example.demo331bacnkend.entity.Organizer.builder()
+                .organizationName("Tourism Authority of Thailand")
+                .address("1600 New Petchburi Rd, Makkasan, Ratchathewi, Bangkok")
+                .build());
+
+        organizerRepository.save(com.example.demo331bacnkend.entity.Organizer.builder()
+                .organizationName("Department of Cultural Promotion")
+                .address("Government Complex Building, Chaeng Wattana Rd, Bangkok")
+                .build());
     }
 }

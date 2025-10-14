@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 spring:
   profiles:
     active:
@@ -16,6 +19,11 @@ spring:
     hibernate:
       ddl-auto: create
 
+logging:
+  level:
+    org.springframework.security: DEBUG
+    se331.lab.rest.security: DEBUG
+
 application:
   security:
     jwt:
@@ -23,3 +31,10 @@ application:
       expiration: 86400000 # 86400000 # a day
       refresh-token:
         expiration: 604800000 # 7 days
+  
+  firebase:
+    project-id: se331lab10
+    credentials-path: se331lab10-firebase-adminsdk-fbsvc-d273d10d80.json
+    storage:
+      bucket: se331lab10.appspot.com
+      public-url-format: https://storage.googleapis.com/%s/%s

@@ -21,4 +21,8 @@ public class Organizer {
     private Long id;
     private String organizationName;
     private String address;
+    private String phone;
+    private String website;
+    private String image;  // 前端使用的字段名
+    private String profileImage;  // 保留向后兼容
 }

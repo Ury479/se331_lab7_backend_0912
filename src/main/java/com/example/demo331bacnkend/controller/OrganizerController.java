@@ -13,19 +13,19 @@ import java.util.List;
 
 /** REST endpoints for organizers: pagination and get-by-id. */
 @RestController
-@RequestMapping("/organizers")
+@RequestMapping("/api/v1/organizers")
 public class OrganizerController {
 
     private final OrganizerService organizerService;
 
-    public OrganizerController(OrganizerService organizerService) {
+    public OrganizerController(com.example.demo331bacnkend.services.OrganizerService organizerService) {
         this.organizerService = organizerService;
     }
 
     // 负责页面分页功能
     // GET /organizers?_limit=...&_page=...
     @GetMapping
-    public ResponseEntity<List<Organizer>> list(
+    public ResponseEntity<List<com.example.demo331bacnkend.entity.Organizer>> list(
             @RequestParam(value = "_limit", required = false) Integer perPage,
             @RequestParam(value = "_page",  required = false) Integer page) {
         
@@ -38,7 +38,7 @@ public class OrganizerController {
         headers.set("x-total-count", String.valueOf(total));
 
         try {
-            List<Organizer> items = organizerService.getOrganizers(pageSize, pageNumber);
+            List<com.example.demo331bacnkend.entity.Organizer> items = organizerService.getOrganizers(pageSize, pageNumber);
             return new ResponseEntity<>(items, headers, HttpStatus.OK);
         } catch (IndexOutOfBoundsException ex) {
             // follow the same lab behavior as events: return empty with 200
@@ -48,15 +48,15 @@ public class OrganizerController {
 
     // GET /organizers/{id}
     @GetMapping("/{id}")
-    public ResponseEntity<Organizer> getOne(@PathVariable Long id) {
-        Organizer o = organizerService.getOrganizer(id);
+    public ResponseEntity<com.example.demo331bacnkend.entity.Organizer> getOne(@PathVariable Long id) {
+        com.example.demo331bacnkend.entity.Organizer o = organizerService.getOrganizer(id);
         if (o != null) return ResponseEntity.ok(o);
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given id is not found");
     }
 
     // POST /organizers - 创建新的组织者
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Organizer> create(@RequestBody Organizer org) {
+    public ResponseEntity<com.example.demo331bacnkend.entity.Organizer> create(@RequestBody com.example.demo331bacnkend.entity.Organizer org) {
         try {
             // 确保 id 为 null，让数据库自动生成
             org.setId(null);
@@ -69,7 +69,7 @@ public class OrganizerController {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "At least organizationName or address is required");
             }
             
-            Organizer saved = organizerService.save(org);
+            com.example.demo331bacnkend.entity.Organizer saved = organizerService.save(org);
             return ResponseEntity.status(HttpStatus.CREATED).body(saved);
         } catch (ResponseStatusException rse) {
             throw rse;
@@ -80,8 +80,8 @@ public class OrganizerController {
 
     // PUT /organizers/{id} - 更新组织者信息
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Organizer> update(@PathVariable Long id, @RequestBody Organizer org) {
-        Organizer existing = organizerService.getOrganizer(id);
+    public ResponseEntity<com.example.demo331bacnkend.entity.Organizer> update(@PathVariable Long id, @RequestBody com.example.demo331bacnkend.entity.Organizer org) {
+        com.example.demo331bacnkend.entity.Organizer existing = organizerService.getOrganizer(id);
         if (existing == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Organizer with id " + id + " not found");
         }
@@ -89,7 +89,7 @@ public class OrganizerController {
         // 更新字段
         org.setId(id); // 确保使用正确的 ID
         
-        Organizer updated = organizerService.save(org);
+        com.example.demo331bacnkend.entity.Organizer updated = organizerService.save(org);
         return ResponseEntity.ok(updated);
     }
 

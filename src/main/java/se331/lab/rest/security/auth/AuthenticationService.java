@@ -22,6 +22,7 @@ import se331.lab.rest.security.token.TokenType;
 import se331.lab.rest.security.user.Role;
 import se331.lab.rest.security.user.User;
 import se331.lab.rest.security.user.UserRepository;
+import se331.lab.rest.security.util.LabMapper;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -63,6 +64,8 @@ public class AuthenticationService {
     return AuthenticationResponse.builder()
         .accessToken(jwtToken)
             .refreshToken(refreshToken)
+            .user(AuthenticationResponse.UserDTO.fromUser(savedUser))  // 6.3: 返回用户信息
+            .organizer(LabMapper.INSTANCE.getOrganizerDTO(savedUser.getOrganizer()))  // 6.9: 使用 MapStruct 避免堆栈溢出
         .build();
   }
 
@@ -89,6 +92,8 @@ public class AuthenticationService {
     return AuthenticationResponse.builder()
             .accessToken(jwtToken)
             .refreshToken(refreshToken)
+            .user(AuthenticationResponse.UserDTO.fromUser(user))  // 6.3: 返回用户信息
+            .organizer(LabMapper.INSTANCE.getOrganizerDTO(user.getOrganizer()))  // 6.9: 使用 MapStruct 避免堆栈溢出
             .build();
   }
 

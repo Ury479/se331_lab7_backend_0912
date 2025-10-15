@@ -12,25 +12,25 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping // base path optional
+@RequestMapping("/api/v1") // unify API prefix
 public class EventController {
 
     // Prefer constructor injection; if you use Lombok, you can add @RequiredArgsConstructor on class.
     private final EventService eventService;
-    public EventController(EventService eventService) {
+    public EventController(com.example.demo331bacnkend.services.EventService eventService) {
         this.eventService = eventService;
     }
 
     /** GET /events with pagination: _limit & _page 实现分页功能*/
-    @GetMapping("/events") // 若你作业要求是 /event，请改为 "/event"
-    public ResponseEntity<List<Event>> getEventLists(
+    @GetMapping("/events") // full path: /api/v1/events
+    public ResponseEntity<List<com.example.demo331bacnkend.entity.Event>> getEventLists(
             @RequestParam(value = "_limit", required = false) Integer perPage,
             @RequestParam(value = "_page",  required = false) Integer page) {
         // 设置默认值以避免 NullPointerException
         Integer pageNumber = (page != null) ? page : 1;
         Integer pageSize = (perPage != null) ? perPage : 10;
         
-        Page<Event> pageOutput = eventService.getEvents(pageSize, pageNumber);
+        Page<com.example.demo331bacnkend.entity.Event> pageOutput = eventService.getEvents(pageSize, pageNumber);
         HttpHeaders responseHeader = new HttpHeaders();
         // Expose total count to frontend for pagination
         responseHeader.set("x-total-count",String.valueOf(pageOutput.getTotalElements()));
@@ -38,9 +38,9 @@ public class EventController {
     }
 
     /** GET /events/{id} - fetch single event by id */
-    @GetMapping("/events/{id}") // 若你作业要求是 /event/{id}，同步改这里
-    public ResponseEntity<Event> getEvent(@PathVariable("id") Long id) {
-        Event output = eventService.getEvent(id);
+    @GetMapping("/events/{id}") // full path: /api/v1/events/{id}
+    public ResponseEntity<com.example.demo331bacnkend.entity.Event> getEvent(@PathVariable("id") Long id) {
+        com.example.demo331bacnkend.entity.Event output = eventService.getEvent(id);
         // lab7 中的要求
         if (output != null) {
             return ResponseEntity.ok(output);
@@ -49,8 +49,8 @@ public class EventController {
     }
 
     /** POST /events - create new event */
-    @PostMapping("/events")
-    public ResponseEntity<Event> createEvent(@RequestBody Event event) {
+    @PostMapping("/events") // full path: /api/v1/events
+    public ResponseEntity<com.example.demo331bacnkend.entity.Event> createEvent(@RequestBody com.example.demo331bacnkend.entity.Event event) {
         try {
             // 确保 id 为 null，让数据库自动生成
             event.setId(null);
@@ -69,7 +69,7 @@ public class EventController {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Event date is required");
             }
             
-            Event createdEvent = eventService.createEvent(event);
+            com.example.demo331bacnkend.entity.Event createdEvent = eventService.createEvent(event);
             return new ResponseEntity<>(createdEvent, HttpStatus.CREATED);
         } catch (ResponseStatusException rse) {
             throw rse; // Re-throw validation errors
@@ -79,8 +79,8 @@ public class EventController {
     }
 
     @PostMapping
-    public ResponseEntity<?> updateEvent(@RequestBody Event event) {
-        Event output = eventService.save(event);
+    public ResponseEntity<?> updateEvent(@RequestBody com.example.demo331bacnkend.entity.Event event) {
+        com.example.demo331bacnkend.entity.Event output = eventService.save(event);
         return ResponseEntity.ok(output);
     }
 }

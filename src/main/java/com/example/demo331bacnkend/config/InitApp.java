@@ -27,8 +27,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     @Override
     @Transactional
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        addUser();
-        addOrganizers();
+        addUsersAndOrganizers();  // 6.6: 合并用户和组织者创建，建立关联
         eventRepository.save(Event.builder()
                 .category("Academic")
                 .title("Midterm Exam")
@@ -74,64 +73,79 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .build());
     }
 
-    private void addUser() {
+    // 6.6: 创建用户和组织者，并建立双向关联
+    private void addUsersAndOrganizers() {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         
-        // ✅ 确保 username 和 email 一致性
+        // 创建用户
         User user1 = User.builder()
-                .username("admin")  // username = 用户名
+                .username("admin")
                 .password(encoder.encode("admin"))
                 .firstname("admin")
                 .lastname("admin")
                 .email("admin@admin.com")
                 .enabled(true)
                 .build();
+        user1.getRoles().add(Role.ROLE_USER);
+        user1.getRoles().add(Role.ROLE_ADMIN);
         
         User user2 = User.builder()
-                .username("user")  // username = 用户名
+                .username("user")
                 .password(encoder.encode("user"))
                 .firstname("user")
                 .lastname("user")
                 .email("enabled@user.com")
                 .enabled(true)
                 .build();
+        user2.getRoles().add(Role.ROLE_USER);
         
         User user3 = User.builder()
-                .username("disableUser")  // username = 用户名
+                .username("disableUser")
                 .password(encoder.encode("disableUser"))
                 .firstname("disableUser")
                 .lastname("disableUser")
                 .email("disableUser@user.com")
                 .enabled(false)
                 .build();
-        
-        user1.getRoles().add(Role.ROLE_USER);
-        user1.getRoles().add(Role.ROLE_ADMIN);
-        
-        user2.getRoles().add(Role.ROLE_USER);
         user3.getRoles().add(Role.ROLE_USER);
         
-        userRepository.save(user1);
-        userRepository.save(user2);
-        userRepository.save(user3);
-    }
-
-    private void addOrganizers() {
-        organizerRepository.save(com.example.demo331bacnkend.entity.Organizer.builder()
+        // 先保存用户
+        user1 = userRepository.save(user1);
+        user2 = userRepository.save(user2);
+        user3 = userRepository.save(user3);
+        
+        // 创建组织者
+        com.example.demo331bacnkend.entity.Organizer org1 = com.example.demo331bacnkend.entity.Organizer.builder()
                 .organizationName("CAMT")
                 .address("239 Huay Kaew Rd, Suthep, Muang, Chiang Mai")
-                .build());
-
-        organizerRepository.save(com.example.demo331bacnkend.entity.Organizer.builder()
+                .build();
+        
+        com.example.demo331bacnkend.entity.Organizer org2 = com.example.demo331bacnkend.entity.Organizer.builder()
                 .organizationName("CMU")
                 .address("Chiang Mai University, 239 Huay Kaew Rd, Chiang Mai")
-                .build());
-
-        organizerRepository.save(com.example.demo331bacnkend.entity.Organizer.builder()
+                .build();
+        
+        com.example.demo331bacnkend.entity.Organizer org3 = com.example.demo331bacnkend.entity.Organizer.builder()
                 .organizationName("Chiang Mai Municipality")
                 .address("Chiang Mai City Hall, Chang Khlan Rd, Chiang Mai")
-                .build());
-
+                .build();
+        
+        // 6.6: 建立 User 和 Organizer 的双向关联
+        org1.setUser(user1);
+        user1.setOrganizer(org1);
+        
+        org2.setUser(user2);
+        user2.setOrganizer(org2);
+        
+        org3.setUser(user3);
+        user3.setOrganizer(org3);
+        
+        // 保存组织者（会级联保存关联）
+        organizerRepository.save(org1);
+        organizerRepository.save(org2);
+        organizerRepository.save(org3);
+        
+        // 额外的组织者（没有关联用户）
         organizerRepository.save(com.example.demo331bacnkend.entity.Organizer.builder()
                 .organizationName("Tourism Authority of Thailand")
                 .address("1600 New Petchburi Rd, Makkasan, Ratchathewi, Bangkok")

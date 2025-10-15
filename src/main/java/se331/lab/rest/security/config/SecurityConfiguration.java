@@ -98,6 +98,20 @@ public class SecurityConfiguration {
           // 生产环境建议移除或使用 @Profile("dev") 条件化
           // authorize.requestMatchers(SecurityPaths.DOC_WHITELIST).permitAll();
           
+          // 统一前缀后的公开端点：匿名可读（GET）
+          authorize.requestMatchers(HttpMethod.GET, "/api/v1/events/**").permitAll();
+          authorize.requestMatchers(HttpMethod.GET, "/api/v1/organizers/**").permitAll();
+
+          // 写操作仅 ADMIN（POST/PUT/PATCH/DELETE）
+          authorize.requestMatchers(HttpMethod.POST, "/api/v1/events/**").hasRole("ADMIN");
+          authorize.requestMatchers(HttpMethod.PUT, "/api/v1/events/**").hasRole("ADMIN");
+          authorize.requestMatchers(HttpMethod.PATCH, "/api/v1/events/**").hasRole("ADMIN");
+          authorize.requestMatchers(HttpMethod.DELETE, "/api/v1/events/**").hasRole("ADMIN");
+          authorize.requestMatchers(HttpMethod.POST, "/api/v1/organizers/**").hasRole("ADMIN");
+          authorize.requestMatchers(HttpMethod.PUT, "/api/v1/organizers/**").hasRole("ADMIN");
+          authorize.requestMatchers(HttpMethod.PATCH, "/api/v1/organizers/**").hasRole("ADMIN");
+          authorize.requestMatchers(HttpMethod.DELETE, "/api/v1/organizers/**").hasRole("ADMIN");
+
           // 其他所有请求需要认证
           authorize.anyRequest().authenticated();
         })
@@ -224,17 +238,5 @@ public class SecurityConfiguration {
       new ObjectMapper().writeValue(response.getOutputStream(), errorResponse);
     };
   }
-
-
-// import org.springframework.web.filter.CorsFilter;
-
-  @Bean
-  public FilterRegistrationBean<CorsFilter> corsFilterBean(CorsConfigurationSource source) {
-    // English comment: ensure CORS filter runs before security/JWT filters
-    FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(source));
-    bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-    return bean;
-  }
-
 }
 

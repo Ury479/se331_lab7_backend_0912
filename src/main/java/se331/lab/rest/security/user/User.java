@@ -1,5 +1,6 @@
 package se331.lab.rest.security.user;
 
+import com.example.demo331bacnkend.entity.Organizer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,6 +47,11 @@ public class User implements UserDetails {
 
   @OneToMany(mappedBy = "user")
   private List<Token> tokens;
+  
+  // 6.5: 添加与 Organizer 的一对一关联
+  @OneToOne(mappedBy = "user")
+  Organizer organizer;
+  
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return roles.stream().map(role -> new SimpleGrantedAuthority(role.name())).collect(Collectors.toList());
